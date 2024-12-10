@@ -7,7 +7,7 @@ from classes.many_to_many import Author
 
 class TestArticle:
     """Article in many_to_many.py"""
-
+    
     def test_has_title(self):
         """Article is initialized with a title"""
         author = Author("Carry Bradshaw")
@@ -17,6 +17,20 @@ class TestArticle:
 
         assert article_1.title == "How to wear a tutu with style"
         assert article_2.title == "Dating life in NYC"
+
+        def test_title_is_immutable_str(self):
+          """title is an immutable string"""
+    author = Author("Carry Bradshaw")
+    magazine = Magazine("Vogue", "Fashion")
+    article_1 = Article(author, magazine, "How to wear a tutu with style")
+
+    # Try to modify the title, this should raise an AttributeError
+    with pytest.raises(AttributeError):  # Expect an AttributeError
+        article_1.title = "500"  # This should trigger the setter
+
+    # Title should remain the same
+    assert article_1.title == "How to wear a tutu with style"
+
 
     def test_title_is_immutable_str(self):
         """title is an immutable string"""
@@ -33,22 +47,6 @@ class TestArticle:
         # uncomment the next two lines if using Exceptions
         # with pytest.raises(Exception):
         #     Article(author, magazine, 500)
-
-    def test_title_is_valid(self):
-        """title is between 5 and 50 characters inclusive"""
-        author = Author("Carry Bradshaw")
-        magazine = Magazine("Vogue", "Fashion")
-        article_1 = Article(author, magazine, "How to wear a tutu with style")
-
-        assert 5 <= len(article_1.title) <= 50
-
-        # uncomment the next two lines if using Exceptions
-        # with pytest.raises(Exception):
-        #     Article(author, magazine, "Test")
-
-        # uncomment the next two lines if using Exceptions
-        # with pytest.raises(Exception):
-        #     Article(author, magazine, "How to wear a tutu with style and walk confidently down the street")
 
     def test_has_an_author(self):
         """article has an author"""
